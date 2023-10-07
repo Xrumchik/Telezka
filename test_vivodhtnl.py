@@ -11,24 +11,49 @@ HTML="""
 
 
 </head>
+<body>
 
-
-<script>
-
-
-const user="TTT";
-const req = new XMLHttpRequest();
-
-
-req.open("GET", "http://192.168.1.3:9000",false);
-req.send("sdf");
-
-
-</script>
 
 
 <center><h1> Stream for Nikolay </h1></center>
 <center><img src="stream.mjpg" width='640' height='480' autoplay playsinline></center>
+
+
+
+<script>
+
+let xhr = new XMLHttpRequest();
+
+// 2. Configure it: GET-request for the URL /article/.../load
+xhr.open('GET', 'https:/google.com/search);
+
+// 3. Send the request over the network
+xhr.send();
+
+// 4. This will be called after the response is received
+xhr.onload = function() {
+  if (xhr.status != 200) { // analyze HTTP status of the response
+    alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+  } else { // show the result
+    alert(`Done, got ${xhr.response.length} bytes`); // response is the server response
+  }
+};
+
+xhr.onprogress = function(event) {
+  if (event.lengthComputable) {
+    alert(`Received ${event.loaded} of ${event.total} bytes`);
+  } else {
+    alert(`Received ${event.loaded} bytes`); // no Content-Length
+  }
+
+};
+
+xhr.onerror = function() {
+  alert("Request failed");
+};
+
+</script>
+
 </body>
 </html>
 """
@@ -38,7 +63,7 @@ req.send("sdf");
 def main():
     StreamProps = ps.StreamProps
     StreamProps.set_Page(StreamProps,HTML)
-    address = ('192.168.1.3',9000) # Enter your IP address 
+    address = ('192.168.137.193',9000) # Enter your IP address 
     try:
         StreamProps.set_Mode(StreamProps,'cv2')
         capture = cv2.VideoCapture(0)
