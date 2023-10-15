@@ -1,12 +1,12 @@
 from flask import Flask,request
+from flask_cors import CORS
 
 app=Flask(__name__)
+CORS(app)
 
-def openget():
-    return "sdfsdf"
 
 def openpost():
-    return "sdfsdf"
+    return "heeey"
 
 
 @app.route('/process_json', methods=['GET','POST'])
@@ -14,10 +14,9 @@ def process_json():
     if request.method == 'POST':
         print(1)
         return openpost()
-    if request.method == 'GET':
-        print(2)
-        return openget()
+
+
 
 
 if __name__=='__main__':
-    app.run(host="192.168.137.193", port=4343)
+    app.run(host="192.168.1.7", port=4343)
