@@ -18,33 +18,11 @@ HTML = """
 <center><h1> Stream for Nikolay </h1></center>
 
 
-<div style="margin: 500px 0 10px 200px; display:block;">
-
-<button type="bs"  onclick="functionToExecute()">Вперед</button>
-
-</div>
-
-<div style="margin: -20px 0 10px 400px; display:block;">
-
-<button type="bb">Назад</button>
-
-</div>
-
-</div>
-
-<div style="margin: -20px 0 10px 600px; display:block;">
-
-<button type="bb">Влево</button>
-
-</div>
-
-</div>
-
-<div style="margin: -20px 0 10px 800px; display:block;">
-
-<button type="bb">Вправо</button>
-
-</div>
+<button style="position: absolute; bottom: 250; left: 300; width: 200px; height: 50px;" onclick="straight()">Вперед</button>
+<button style="position: absolute; bottom: 250; left: 550; width: 200px; height: 50px;" onclick="back()">Назад</button>
+<button style="position: absolute; bottom: 250; left: 800; width: 200px; height: 50px;" onclick="left()">Влево</button>
+<button style="position: absolute; bottom: 250; left: 1050; width: 200px; height: 50px;" onclick="right()">Вправо</button>
+<button style="position: absolute; bottom: 250; left: 1300; width: 200px; height: 50px;" onclick="stop()">Стоп</button>
 
 
 <script>
@@ -60,10 +38,25 @@ xhr.addEventListener("readystatechange", function() {
 });
 
 
-function functionToExecute () {
-    alert(2);
-    xhr.open("POST", "http://192.168.1.7:4343/process_json");
-    xhr.send('hello');
+function straight () {
+    xhr.open("POST", "http://192.168.1.7:4343/straight");
+    xhr.send();
+} 
+function back () {
+    xhr.open("POST", "http://192.168.1.7:4343/back");
+    xhr.send();
+} 
+function left () {
+    xhr.open("POST", "http://192.168.1.7:4343/left");
+    xhr.send();
+} 
+function right () {
+    xhr.open("POST", "http://192.168.1.7:4343/right");
+    xhr.send();
+}
+function stop () {
+    xhr.open("POST", "http://192.168.1.7:4343/stop");
+    xhr.send();
 } 
 
 </script>
