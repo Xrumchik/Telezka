@@ -3,9 +3,9 @@ import socket, cv2, pickle, struct, imutils
 # Создание сокета
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host_name = socket.gethostname()
-host_ip = socket.gethostbyname(host_name)
+host_ip = 'your ip'
 print('HOST IP:', host_ip)
-port = 9999
+port = 9999 - your port
 socket_address = (host_ip, port)
 
 # Socket Bind
