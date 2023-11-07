@@ -3,7 +3,7 @@ import socket, cv2, pickle, struct
 import numpy as np
 # create socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host_ip = '192.168.56.1'  # paste your server ip address here
+host_ip = '192.168.1.7'  # paste your server ip address here
 port = 9999
 client_socket.connect((host_ip, port))  # подключаемся к сокету
 data = b""
@@ -49,14 +49,19 @@ while True:
         y = int(dM01 / dArea)
         cv2.circle(img, (x, y), 10, (0, 0, 255), -1)
 
-        if (x > (width / 2 + edge)) and x != 0:
+        if (x <= (width / 2 + edge)+10)and (x >= (width / 2 - edge)-10) and x != 0:
+            print("G")
+
+        if (x > (width / 2 + edge)+10) and x != 0:
             print("L")
             cv2.rectangle(img, (0, 0), (30, height), (0, 255, 0), -1)
-        if (x < (width / 2 - edge)) and x != 0:
+
+        if (x < (width / 2 - edge)-10) and x != 0:
             print("R")
             cv2.rectangle(img, (width - 30, 0), (width, height), (0, 255, 0), -1)
     else:
         print("S")
+    cv2.imshow('result', img)
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
         break
