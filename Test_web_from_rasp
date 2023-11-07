@@ -18,10 +18,10 @@ HTML = """
 <center><img src="stream.mjpg" width='640' height='480' autoplay playsinline></center>
 
 
-<button style="position: absolute; bottom: 250; left: 300; width: 200px; height: 50px;" onclick="straight()">Вперед</button>
-<button style="position: absolute; bottom: 250; left: 550; width: 200px; height: 50px;" onclick="back()">Назад</button>
-<button style="position: absolute; bottom: 250; left: 800; width: 200px; height: 50px;" onclick="left()">Влево</button>
-<button style="position: absolute; bottom: 250; left: 1050; width: 200px; height: 50px;" onclick="right()">Вправо</button>
+<button style="position: absolute; bottom: 250; left: 300; width: 200px; height: 50px;" onmousedown="straight()" onmouseup="stop()">Вперед</button>
+<button style="position: absolute; bottom: 250; left: 550; width: 200px; height: 50px;" onmousedown="back()" onmouseup="stop()">Назад</button>
+<button style="position: absolute; bottom: 250; left: 800; width: 200px; height: 50px;" onmousedown="left()" onmouseup="stop()">Влево</button>
+<button style="position: absolute; bottom: 250; left: 1050; width: 200px; height: 50px;" onmousedown="right()" onmouseup="stop()">Вправо</button>
 <button style="position: absolute; bottom: 250; left: 1300; width: 200px; height: 50px;" onclick="stop()">Стоп</button>
 
 
@@ -39,24 +39,29 @@ xhr.addEventListener("readystatechange", function() {
 
 
 function straight () {
-    xhr.open("POST", "http://192.168.1.3:4343/straight");
+    xhr.open("POST", "http://192.168.137.7:4343/straight");
     xhr.send();
+    console.log('g');
 } 
 function back () {
-    xhr.open("POST", "http://192.168.1.3:4343/back");
+    xhr.open("POST", "http://192.168.137.7:4343/back");
+    console.log('b');
     xhr.send();
 } 
 function left () {
-    xhr.open("POST", "http://192.168.1.3:4343/left");
+    xhr.open("POST", "http://192.168.137.7:4343/left");
     xhr.send();
+    console.log('l');
 } 
 function right () {
-    xhr.open("POST", "http://192.168.1.3:4343/right");
+    xhr.open("POST", "http://192.168.137.7:4343/right");
     xhr.send();
+    console.log('r');
 }
 function stop () {
-    xhr.open("POST", "http://192.168.1.3:4343/stop");
+    xhr.open("POST", "http://192.168.137.7:4343/stop");
     xhr.send();
+    console.log('s');
 } 
 
 </script>
@@ -69,10 +74,12 @@ function stop () {
 def main():
     StreamProps = ps.StreamProps
     StreamProps.set_Page(StreamProps,HTML)
-    address = ('192.168.1.3',9000) # Enter your IP address 
+    address = ('192.168.137.7',9000) # Enter your IP address 
     try:
         StreamProps.set_Mode(StreamProps,'cv2')
         capture = cv2.VideoCapture(0)
+        ret, frame=capture.read()
+        cv2.imwrite('temp_frame.jpg',frame)
         capture.set(cv2.CAP_PROP_BUFFERSIZE,4)
         capture.set(cv2.CAP_PROP_FRAME_WIDTH,320)
         capture.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
